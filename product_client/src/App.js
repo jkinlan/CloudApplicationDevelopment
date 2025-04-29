@@ -58,7 +58,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Product List</h1>
+      <h1>James' Products</h1>
 
       {/* List of Products */}
       {products.length > 0 ? (
