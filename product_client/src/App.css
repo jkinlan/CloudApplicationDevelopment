@@ -42,12 +42,12 @@ div {
 
 h1 {
   color: yellow;
-  text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000;
+  text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px #000, 1px -1px #000;
 }
 
 h2 {
   color: greenyellow;
-  text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000;
+  text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px #000, 1px -1px #000;
 }
 
 form {
@@ -59,7 +59,7 @@ form {
 input, textarea {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 5px 0;
   box-sizing: border-box;
   border-radius: 15px;
   border: none;
@@ -85,7 +85,8 @@ ul {
   width: 40%;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 10px;
+  padding-left: 65px;
+  padding-top: 20px;
   padding-bottom: 10px;
   text-align: left;
   border-radius: 25px;
