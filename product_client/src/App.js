@@ -100,15 +100,16 @@ function App() {
           onChange={handleInputChange}
           required
         /><br/>
-        <label>
-          Available:
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 35%', width: '50%'}}>
+        <label htmlFor="available">Available</label>
           <input
-            type="checkbox"
-            name="available"
-            checked={newProduct.available}
-            onChange={handleInputChange}
+              type="checkbox"
+              name="available"
+              checked={newProduct.available}
+              onChange={handleInputChange}
           />
-        </label><br/>
+
+</div>
         <button type="submit">Add Product</button>
       </form>
     </div>

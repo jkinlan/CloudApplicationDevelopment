@@ -38,9 +38,6 @@
 }
 
 div {
-  background-color: #61dafb;
-  padding-bottom: 50px;
-  padding-top: 1px;
 }
 
 h1 {
@@ -54,12 +51,12 @@ h2 {
 }
 
 form {
-  width: 50%;
+  width: 30%;
   margin-left: auto;
   margin-right: auto;
 }
 
-input, textarea, label {
+input, textarea {
   width: 100%;
 }
 
@@ -71,4 +68,8 @@ ul {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: left;
+}
+
+body {
+  background-color: #61dafb;
 }
