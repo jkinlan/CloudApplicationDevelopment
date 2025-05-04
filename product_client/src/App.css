@@ -36,3 +36,39 @@
     transform: rotate(360deg);
   }
 }
+
+div {
+  background-color: #61dafb;
+  padding-bottom: 50px;
+  padding-top: 1px;
+}
+
+h1 {
+  color: yellow;
+  text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000;
+}
+
+h2 {
+  color: greenyellow;
+  text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000;
+}
+
+form {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input, textarea, label {
+  width: 100%;
+}
+
+ul {
+  background-color: deepskyblue;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+}

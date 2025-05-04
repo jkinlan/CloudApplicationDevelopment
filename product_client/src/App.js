@@ -75,7 +75,7 @@ function App() {
       )}
 
       {/* New Product Form */}
-      <h2>Add New Product</h2>
+      <br></br><h2>Add New Product</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
