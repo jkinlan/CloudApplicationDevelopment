@@ -66,7 +66,8 @@ function App() {
           {products.map((product) => (
             <li key={product.id}>
               <strong>{product.name}</strong> - ${product.price}
-              {product.available ? " (Available)" : " (Unavailable)"}
+              {product.available ? " (Available)" : " (Unavailable)"}<br></br>
+              {product.description}
             </li>
           ))}
         </ul>
