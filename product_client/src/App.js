@@ -67,7 +67,7 @@ function App() {
             <li key={product.id}>
               <strong>{product.name}</strong> - ${product.price}
               {product.available ? " (Available)" : " (Unavailable)"}<br></br>
-              {product.description}
+              {product.description}<br></br><br></br>
             </li>
           ))}
         </ul>
@@ -76,7 +76,7 @@ function App() {
       )}
 
       {/* New Product Form */}
-      <br></br><h2>Add New Product</h2>
+      <br></br><br></br><h2>Add New Product</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

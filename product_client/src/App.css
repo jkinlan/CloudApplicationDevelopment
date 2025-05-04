@@ -58,6 +58,26 @@ form {
 
 input, textarea {
   width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 15px;
+  border: none;
+}
+
+button {
+  margin-top: 35px;
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 15px;
+  width: 80%;
+}
+
+button:hover{
+  background-color: #03945f;
 }
 
 ul {
