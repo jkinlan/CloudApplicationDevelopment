@@ -50,10 +50,17 @@ h2 {
   text-shadow: 1px 1px 1px #000, -1px 1px 1px #000, -1px -1px #000, 1px -1px #000;
 }
 
-form {
+div.formclass {
   width: 30%;
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid #000000;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 25px;
+  background-color: deepskyblue;
 }
 
 input, textarea {
@@ -74,6 +81,7 @@ button {
   font-size: 16px;
   border-radius: 15px;
   width: 80%;
+  border: 1px solid #000000;
 }
 
 button:hover{
@@ -82,7 +90,7 @@ button:hover{
 
 ul {
   background-color: deepskyblue;
-  width: 40%;
+  width: 32%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 65px;
@@ -90,8 +98,20 @@ ul {
   padding-bottom: 10px;
   text-align: left;
   border-radius: 25px;
+  border: 1px solid #000000;
+  margin-top: 50px
 }
 
 body {
   background-color: #61dafb;
+  padding-bottom: 100px;
+  color: #fff;
+  text-shadow: .5px .5px .5px #000;
+}
+
+header {
+  background-color: deepskyblue;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #000000;
 }

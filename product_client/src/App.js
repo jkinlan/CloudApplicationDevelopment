@@ -46,8 +46,8 @@ function App() {
       });
 
       if (response.ok) {
-        setNewProduct({ name: "", description: "", price: "", available: true }); // Reset
-        fetchProducts(); // Refresh list
+        setNewProduct({ name: "", description: "", price: "", available: true }); 
+        fetchProducts(); 
       } else {
         console.error("Failed to create product");
       }
@@ -58,9 +58,10 @@ function App() {
 
   return (
     <div className="App">
+      <header>
       <h1>James' Products</h1>
+      </header>
 
-      {/* List of Products */}
       {products.length > 0 ? (
         <ul>
           {products.map((product) => (
@@ -75,8 +76,9 @@ function App() {
         <p>No products found.</p>
       )}
 
-      {/* New Product Form */}
-      <br></br><br></br><h2>Add New Product</h2>
+      <br></br><br></br>
+      <div class="formclass">
+        <h2>Add New Product</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -113,6 +115,7 @@ function App() {
 </div>
         <button type="submit">Add Product</button>
       </form>
+      </div>
     </div>
   );
 }
