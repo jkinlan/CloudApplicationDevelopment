@@ -35,6 +35,24 @@ function App() {
     }));
   };
 
+  const handlePriceChange = (e) => {
+    let rawValue = e.target.value.replace(/[^\d.-]/g, ""); // Allow only numbers, periods, and minus signs
+    setNewProduct((prevProduct) => ({
+      ...prevProduct,
+      price: rawValue, // Only store the raw numeric input
+    }));
+  };
+
+  const handlePriceBlur = () => {
+    const price = parseFloat(newProduct.price);
+    if (!isNaN(price)) {
+      setNewProduct((prevProduct) => ({
+        ...prevProduct,
+        price: price.toFixed(2), // Format to 2 decimal places on blur
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editingId) {
@@ -100,6 +118,13 @@ function App() {
     }
   };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("en-IE", {
+      style: "currency",
+      currency: "EUR",
+    }).format(price);
+  };
+
   return (
     <div className="App">
       <header>
@@ -111,22 +136,22 @@ function App() {
           {products.map((product) => (
             <li key={product.id}>
               <div className="product-list">
-              <div>
-                <strong>{product.name}</strong> - €{product.price}
-                {product.available ? " (Available)" : " (Unavailable)"}
+                <div>
+                  <strong>{product.name}</strong> - {formatPrice(product.price)}
+                  {product.available ? " (Available)" : " (Unavailable)"}
+                </div>
+                <div className="buttom-functions">
+                  <button className="edit-button" onClick={() => handleEdit(product)}>Edit</button>
+                  <button className="delete-button" onClick={() => handleDelete(product.id)}>Delete</button>
+                </div>
               </div>
-              <div className="buttom-functions">
-                <button className="edit-button" onClick={() => handleEdit(product)}>Edit</button>
-                <button className="delete-button" onClick={() => handleDelete(product.id)}>Delete</button>
-              </div>
-            </div>
-            <div>{product.description}</div>
+              <div>{product.description}</div>
               <br />
             </li>
           ))}
         </ul>
       ) : (
-        <p>No products found.</p>
+        <h3>No products listed !</h3>
       )}
 
       <br /><br />
@@ -149,11 +174,12 @@ function App() {
             required
           /><br />
           <input
-            type="number"
+            type="text"  // Changed from 'number' to 'text' to allow free input
             name="price"
             placeholder="Price"
             value={newProduct.price}
-            onChange={handleInputChange}
+            onChange={handlePriceChange}  // Call the custom price change handler
+            onBlur={handlePriceBlur}  // Apply formatting on blur (when user leaves the field)
             required
           /><br />
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 35%', width: '50%' }}>
@@ -165,7 +191,7 @@ function App() {
               onChange={handleInputChange}
             />
           </div>
-          <button class="add-button" type="submit">{editingId ? "Update Product" : "Add Product"}</button>
+          <button className="add-button" type="submit">{editingId ? "Update Product" : "Add Product"}</button>
           {editingId && <button className="cancel-button" type="button" onClick={() => {
             setEditingId(null);
             setNewProduct({ name: "", description: "", price: "", available: true });
