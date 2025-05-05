@@ -12,7 +12,7 @@ function App() {
   });
   const [editingId, setEditingId] = useState(null);
 
-  const API_URL = "http://localhost:3000/products";
+  const API_URL = "http://ec2-108-129-11-224.eu-west-1.compute.amazonaws.com:3000/products";
 
   useEffect(() => {
     fetchProducts();
