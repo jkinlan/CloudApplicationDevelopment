@@ -178,3 +178,9 @@ header {
   padding-bottom: 5px;
   border-bottom: 1px solid #000000;
 }
+
+.error-message {
+  color: white;
+  font-weight: bold;
+  margin: 10px 0;
+}

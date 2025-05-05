@@ -15,6 +15,9 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
+  #Allow access from server
+    config.hosts << "ec2-108-129-11-224.eu-west-1.compute.amazonaws.com:3000"
+
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?

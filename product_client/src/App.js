@@ -3,6 +3,7 @@ import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const [newProduct, setNewProduct] = useState({
     name: "",
     description: "",
@@ -36,10 +37,10 @@ function App() {
   };
 
   const handlePriceChange = (e) => {
-    let rawValue = e.target.value.replace(/[^\d.-]/g, ""); // Allow only numbers, periods, and minus signs
+    let rawValue = e.target.value.replace(/[^\d.-]/g, "");
     setNewProduct((prevProduct) => ({
       ...prevProduct,
-      price: rawValue, // Only store the raw numeric input
+      price: rawValue,
     }));
   };
 
@@ -48,13 +49,20 @@ function App() {
     if (!isNaN(price)) {
       setNewProduct((prevProduct) => ({
         ...prevProduct,
-        price: price.toFixed(2), // Format to 2 decimal places on blur
+        price: price.toFixed(2),
       }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+
+    if (isNaN(newProduct.price) || newProduct.price <= 0) {
+      setErrorMessage("Price cannot be negative.");
+      return;
+    }
+
     if (editingId) {
       try {
         const response = await fetch(`${API_URL}/${editingId}`, {
@@ -63,13 +71,14 @@ function App() {
           body: JSON.stringify(newProduct),
         });
         if (response.ok) {
-          setEditingId(null);
+          setEditingId(null); 
           setNewProduct({ name: "", description: "", price: "", available: true });
           fetchProducts();
         } else {
-          console.error("Failed to update product");
+          setErrorMessage("Failed to update product, please try again.");
         }
       } catch (error) {
+        setErrorMessage("Error updating product, please try again.");
         console.error("Error updating product:", error);
       }
     } else {
@@ -83,9 +92,10 @@ function App() {
           setNewProduct({ name: "", description: "", price: "", available: true });
           fetchProducts();
         } else {
-          console.error("Failed to create product");
+          setErrorMessage("Failed to add product, please try again.");
         }
       } catch (error) {
+        setErrorMessage("Error adding product, please try again.");
         console.error("Error creating product:", error);
       }
     }
@@ -98,10 +108,11 @@ function App() {
       price: product.price,
       available: product.available,
     });
-    setEditingId(product.id);
+    setEditingId(product.id); 
   };
 
   const handleDelete = async (id) => {
+    setErrorMessage(""); 
     if (window.confirm("This product will now be deleted!")) {
       try {
         const response = await fetch(`${API_URL}/${id}`, {
@@ -110,9 +121,10 @@ function App() {
         if (response.ok) {
           fetchProducts();
         } else {
-          console.error("Failed to delete product");
+          setErrorMessage("Failed to delete product, please try again.");
         }
       } catch (error) {
+        setErrorMessage("Error deleting product. Please try again later.");
         console.error("Error deleting product:", error);
       }
     }
@@ -157,6 +169,7 @@ function App() {
       <br /><br />
       <div className="formclass">
         <h2>{editingId ? "Edit Product" : "Add New Product"}</h2>
+        {errorMessage && <div className="error-message">{errorMessage}<br /></div>}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -174,12 +187,12 @@ function App() {
             required
           /><br />
           <input
-            type="text"  // Changed from 'number' to 'text' to allow free input
+            type="text"
             name="price"
             placeholder="Price"
             value={newProduct.price}
-            onChange={handlePriceChange}  // Call the custom price change handler
-            onBlur={handlePriceBlur}  // Apply formatting on blur (when user leaves the field)
+            onChange={handlePriceChange}
+            onBlur={handlePriceBlur}
             required
           /><br />
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 35%', width: '50%' }}>
