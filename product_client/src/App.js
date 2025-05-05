@@ -9,8 +9,9 @@ function App() {
     price: "",
     available: true,
   });
+  const [editingId, setEditingId] = useState(null);
 
-  const API_URL = "http://localhost:3000/products"; 
+  const API_URL = "http://localhost:3000/products";
 
   useEffect(() => {
     fetchProducts();
@@ -36,39 +37,91 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newProduct),
-      });
-
-      if (response.ok) {
-        setNewProduct({ name: "", description: "", price: "", available: true }); 
-        fetchProducts(); 
-      } else {
-        console.error("Failed to create product");
+    if (editingId) {
+      try {
+        const response = await fetch(`${API_URL}/${editingId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newProduct),
+        });
+        if (response.ok) {
+          setEditingId(null);
+          setNewProduct({ name: "", description: "", price: "", available: true });
+          fetchProducts();
+        } else {
+          console.error("Failed to update product");
+        }
+      } catch (error) {
+        console.error("Error updating product:", error);
       }
-    } catch (error) {
-      console.error("Error creating product:", error);
+    } else {
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newProduct),
+        });
+        if (response.ok) {
+          setNewProduct({ name: "", description: "", price: "", available: true });
+          fetchProducts();
+        } else {
+          console.error("Failed to create product");
+        }
+      } catch (error) {
+        console.error("Error creating product:", error);
+      }
+    }
+  };
+
+  const handleEdit = (product) => {
+    setNewProduct({
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      available: product.available,
+    });
+    setEditingId(product.id);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("This product will now be deleted!")) {
+      try {
+        const response = await fetch(`${API_URL}/${id}`, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          fetchProducts();
+        } else {
+          console.error("Failed to delete product");
+        }
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
     }
   };
 
   return (
     <div className="App">
       <header>
-      <h1>James' Products</h1>
+        <h1>James' Products</h1>
       </header>
 
       {products.length > 0 ? (
         <ul>
           {products.map((product) => (
             <li key={product.id}>
-              <strong>{product.name}</strong> - ${product.price}
-              {product.available ? " (Available)" : " (Unavailable)"}<br></br>
-              {product.description}<br></br><br></br>
+              <div className="product-list">
+              <div>
+                <strong>{product.name}</strong> - €{product.price}
+                {product.available ? " (Available)" : " (Unavailable)"}
+              </div>
+              <div className="buttom-functions">
+                <button className="edit-button" onClick={() => handleEdit(product)}>Edit</button>
+                <button className="delete-button" onClick={() => handleDelete(product.id)}>Delete</button>
+              </div>
+            </div>
+            <div>{product.description}</div>
+              <br />
             </li>
           ))}
         </ul>
@@ -76,45 +129,48 @@ function App() {
         <p>No products found.</p>
       )}
 
-      <br></br><br></br>
-      <div class="formclass">
-        <h2>Add New Product</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={newProduct.name}
-          onChange={handleInputChange}
-          required
-        /><br/>
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={newProduct.description}
-          onChange={handleInputChange}
-          required
-        /><br/>
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={newProduct.price}
-          onChange={handleInputChange}
-          required
-        /><br/>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 35%', width: '50%'}}>
-        <label htmlFor="available">Available</label>
+      <br /><br />
+      <div className="formclass">
+        <h2>{editingId ? "Edit Product" : "Add New Product"}</h2>
+        <form onSubmit={handleSubmit}>
           <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={newProduct.name}
+            onChange={handleInputChange}
+            required
+          /><br />
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={newProduct.description}
+            onChange={handleInputChange}
+            required
+          /><br />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={newProduct.price}
+            onChange={handleInputChange}
+            required
+          /><br />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 35%', width: '50%' }}>
+            <label htmlFor="available">Available</label>
+            <input
               type="checkbox"
               name="available"
               checked={newProduct.available}
               onChange={handleInputChange}
-          />
-
-</div>
-        <button type="submit">Add Product</button>
-      </form>
+            />
+          </div>
+          <button class="add-button" type="submit">{editingId ? "Update Product" : "Add Product"}</button>
+          {editingId && <button className="cancel-button" type="button" onClick={() => {
+            setEditingId(null);
+            setNewProduct({ name: "", description: "", price: "", available: true });
+          }}>Cancel</button>}
+        </form>
       </div>
     </div>
   );
